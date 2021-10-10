@@ -37,6 +37,7 @@ dependencies:
   flutter_inappwebview: ^5.3.2
   url_launcher: ^6.0.12
   location: ^4.3.0
+  assets_audio_player: ^3.0.3+6
 
 dev_dependencies:
   flutter_test:
@@ -61,9 +62,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/sound/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -84,7 +84,7 @@ flutter:
     #       style: italic
     - family: CafeSurround
       fonts:
-        - asset: asset/Cafe24Ssurround.ttf
+        - asset: assets/Cafe24Ssurround.ttf
           weight: 100
   #
   # For details regarding fonts from package dependencies,

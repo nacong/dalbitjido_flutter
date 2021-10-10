@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dalbitjido_flutter/screens/mappage.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -9,6 +10,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  AssetsAudioPlayer audioPlayer =
+      AssetsAudioPlayer(); // this will create a instance object of a class
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +33,10 @@ class _MainPageState extends State<MainPage> {
         selectedFontSize: 14,
         unselectedFontSize: 14,
         items: [
-          BottomNavigationBarItem(label: 'asdf', icon: Icon(Icons.add_alert)),
+          BottomNavigationBarItem(
+            label: 'asdf',
+            icon: Icon(Icons.add_alert),
+          ),
           BottomNavigationBarItem(
             label: 'Music',
             icon: Icon(Icons.music_note),
@@ -86,17 +93,32 @@ class _MainPageState extends State<MainPage> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 40.0, 0, 0),
         child: Center(
-          child: IconButton(
-            icon: Icon(Icons.arrow_right),
-            onPressed: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => MapPage(),
-                ),
-              );
-            },
-          ),
-        ),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                audioPlayer.open(Audio('assets/sound/test.mp3'));
+              },
+              child: Text('🚨'),
+            ),
+            Text(
+              '안전한 길 안내 시작',
+              style: TextStyle(fontSize: 25, fontFamily: 'CafeSurround'),
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_right),
+              iconSize: 50.0,
+              onPressed: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MapPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        )),
       ),
     );
   }
