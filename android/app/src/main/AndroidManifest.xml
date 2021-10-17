@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
    <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="dalbitjido_flutter"
+        android:label="달빛지도"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

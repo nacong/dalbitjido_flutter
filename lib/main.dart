@@ -6,7 +6,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:dalbitjido_flutter/screens/mainpage.dart';
+import 'package:dalbitjido_flutter/screens/homepage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +17,8 @@ Future main() async {
   if (Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
+
+  await Firebase.initializeApp();
 
   runApp(MyApp());
 }
@@ -29,7 +34,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-        home: MainPage(),
+        home: HomePage(),
     );
   }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "941522212089",
+    "project_id": "dalbitjido-328606",
+    "storage_bucket": "dalbitjido-328606.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941522212089:android:b5478f39240c353bac3e28",
+        "android_client_info": {
+          "package_name": "com.example.dalbitjido_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941522212089-nqnm4a8kial6nkso4l54iolm1pj1cqg3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkuU96aNelygloYtAUmKwd8_RY1-5sgVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941522212089-nqnm4a8kial6nkso4l54iolm1pj1cqg3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

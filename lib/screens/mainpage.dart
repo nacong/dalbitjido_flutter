@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dalbitjido_flutter/screens/mappage.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dalbitjido_flutter/screens/registerpage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -10,6 +12,40 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final _auth = FirebaseAuth.instance;
+  int _selectedIndex = 0;
+  List<Widget> _widgetOptions = [
+    Text('home'),
+    Placeholder(),
+    Placeholder(),
+  ];
+
+  int i=0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 0) {
+      if (i%2 == 0) {
+        audioPlayer.open(Audio('assets/sound/test.mp3'));
+        i++;
+      } else {
+        audioPlayer.stop();
+        i++;
+      }
+    } else if (index == 1) {
+      _logOut();
+    }
+  }
+
+  void _logOut() async {
+    await _auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => RegisterPage()));
+  }
+
   AssetsAudioPlayer audioPlayer =
       AssetsAudioPlayer(); // this will create a instance object of a class
 
@@ -34,18 +70,17 @@ class _MainPageState extends State<MainPage> {
         unselectedFontSize: 14,
         items: [
           BottomNavigationBarItem(
-            label: 'asdf',
-            icon: Icon(Icons.add_alert),
+            label: 'Siren',
+            icon: Text('🚨'),
           ),
           BottomNavigationBarItem(
-            label: 'Music',
-            icon: Icon(Icons.music_note),
-          ),
-          BottomNavigationBarItem(
-            label: 'Places',
-            icon: Icon(Icons.local_activity),
+            label: 'Logout',
+            icon: Icon(Icons.logout),
           ),
         ],
+        showSelectedLabels: false, //(1)
+        showUnselectedLabels: false,
+        onTap: _onItemTapped,
       ),
       drawer: Drawer(
         child: ListView(
@@ -77,8 +112,15 @@ class _MainPageState extends State<MainPage> {
             Text('동행',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100)),
             SizedBox(height: 25),
-            Text('지도보기',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100)),
+            new GestureDetector(
+              onTap: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MapPage(),
+                  ),);
+              },
+              child: new Text("지도보기", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100)),
+              ),
             SizedBox(height: 25),
             Text('설정',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100)),
@@ -96,12 +138,6 @@ class _MainPageState extends State<MainPage> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-              onPressed: () {
-                audioPlayer.open(Audio('assets/sound/test.mp3'));
-              },
-              child: Text('🚨'),
-            ),
             Text(
               '안전한 길 안내 시작',
               style: TextStyle(fontSize: 25, fontFamily: 'CafeSurround'),

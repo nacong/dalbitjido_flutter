@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:dalbitjido_flutter/screens/registerpage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,7 +80,7 @@ class _MapPageState extends State<MapPage> {
         // return _locationData;
       }
     }
-    
+
     return _locationData = await location.getLocation();
   }
 
@@ -85,6 +88,38 @@ class _MapPageState extends State<MapPage> {
   void dispose() {
     super.dispose();
   }
+
+  final _auth = FirebaseAuth.instance;
+  int _selectedIndex = 0;
+
+  int i = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 0) {
+      if (i % 2 == 0) {
+        audioPlayer.open(Audio('assets/sound/test.mp3'));
+        i++;
+      } else {
+        audioPlayer.stop();
+        i++;
+      }
+    } else if (index == 1) {
+      _logOut();
+    }
+  }
+
+  void _logOut() async {
+    await _auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => RegisterPage()));
+  }
+
+  AssetsAudioPlayer audioPlayer =
+      AssetsAudioPlayer(); // this will create a instance object of a class
 
   String MY_URL = 'https://dalbitjidoflask.run.goorm.io/arr/';
 
@@ -123,16 +158,17 @@ class _MapPageState extends State<MapPage> {
             unselectedFontSize: 14,
             items: [
               BottomNavigationBarItem(
-                  label: 'asdf', icon: Icon(Icons.add_alert)),
-              BottomNavigationBarItem(
-                label: 'Music',
-                icon: Icon(Icons.music_note),
+                label: 'Siren',
+                icon: Text('🚨'),
               ),
               BottomNavigationBarItem(
-                label: 'Places',
-                icon: Icon(Icons.local_activity),
+                label: 'Logout',
+                icon: Icon(Icons.logout),
               ),
             ],
+            showSelectedLabels: false, //(1)
+            showUnselectedLabels: false,
+            onTap: _onItemTapped,
           ),
           drawer: Drawer(
             child: ListView(
